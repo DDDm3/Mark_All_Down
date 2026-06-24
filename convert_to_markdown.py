@@ -161,7 +161,7 @@ def convert_files(
     overwrite: bool,
 ) -> tuple[int, int, int]:
     MarkItDown = load_markitdown()
-    converter = MarkItDown(enable_plugins=False)
+    converter = MarkItDown()
     root = common_input_root(files) if output_dir else None
 
     succeeded = 0

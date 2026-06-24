@@ -1,0 +1,45 @@
+html, body, [data-testid="stAppViewContainer"], .stApp { background: var(--app-bg); color: var(--text); }
+[data-testid="stHeader"] { background: transparent; }
+[data-testid="stToolbar"] { right: 1.5rem; }
+.block-container { max-width: 1320px; padding-top: 2.1rem; padding-bottom: 2.1rem; }
+h1, h2, h3, p, label, [data-testid="stMarkdownContainer"] { color: var(--text); }
+h1 { font-size: clamp(2.1rem, 4vw, 3.65rem) !important; line-height: 1.04 !important; letter-spacing: -0.045em !important; font-weight: 650 !important; margin: 0 0 0.7rem !important; }
+h2 { letter-spacing: -0.025em !important; font-size: 1.35rem !important; }
+h3 { letter-spacing: -0.015em !important; }
+.eyebrow { color: var(--accent); font-size: 0.76rem; font-weight: 750; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 0.8rem; }
+.hero-copy { color: var(--muted); font-size: 1.04rem; line-height: 1.7; max-width: 670px; margin: 0; }
+.section-kicker { color: var(--muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin: 2.2rem 0 0.65rem; }
+.format-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.format-chip { background: var(--chip); color: var(--text); border-radius: 999px; font-size: 0.74rem; font-weight: 700; padding: 0.34rem 0.68rem; }
+.metric-line { display: flex; gap: 1.6rem; align-items: center; color: var(--muted); font-size: 0.88rem; padding: 0.7rem 0 0.25rem; }
+.metric-line strong { color: var(--text); font-weight: 700; }
+.file-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 1rem; border-bottom: 1px solid var(--line); padding: 0.9rem 0.1rem; }
+.file-row:last-child { border-bottom: 0; }
+.file-name { color: var(--text); font-weight: 650; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-meta { color: var(--muted); font-size: 0.8rem; margin-top: 0.2rem; }
+.status-ready, .status-done, .status-error { border-radius: 999px; font-size: 0.72rem; font-weight: 750; padding: 0.3rem 0.62rem; white-space: nowrap; }
+.status-ready { background: var(--surface-alt); color: var(--muted); }
+.status-done { background: color-mix(in srgb, var(--success) 14%, transparent); color: var(--success); }
+.status-error { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); }
+[data-testid="stFileUploader"] { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 0.35rem; }
+[data-testid="stFileUploaderDropzone"] { background: transparent; border: 1px dashed var(--line); border-radius: 14px; min-height: 168px; }
+[data-testid="stFileUploaderDropzone"]:hover { border-color: var(--accent); }
+[data-testid="stFileUploader"] small, [data-testid="stFileUploader"] span { color: var(--muted); }
+.stButton > button, .stDownloadButton > button { border-radius: 999px; min-height: 2.75rem; font-weight: 700; transition: 150ms ease; }
+.stButton > button[kind="primary"], .stDownloadButton > button[kind="primary"] { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.stButton > button[kind="primary"]:hover, .stDownloadButton > button[kind="primary"]:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.stButton > button[kind="secondary"], .stDownloadButton > button[kind="secondary"] { background: transparent; border-color: var(--line); color: var(--text); }
+[data-testid="stVerticalBlockBorderWrapper"] { background: var(--surface); border-color: var(--line); border-radius: 18px; }
+[data-testid="stTabs"] [data-baseweb="tab-list"] { gap: 1.2rem; border-bottom: 1px solid var(--line); }
+[data-testid="stTabs"] button { color: var(--muted); }
+[data-testid="stTabs"] button[aria-selected="true"] { color: var(--accent); }
+[data-testid="stCodeBlock"] { background: var(--code-bg); border: 1px solid var(--line); border-radius: 14px; }
+[data-testid="stAlert"] { background: var(--surface); color: var(--text); border-color: var(--line); }
+[data-testid="stSelectbox"] > div > div, [data-testid="stToggle"] { color: var(--text); }
+.stSelectbox [data-baseweb="select"] > div { background: var(--surface); border-color: var(--line); color: var(--text); }
+hr { border-color: var(--line) !important; }
+@media (max-width: 760px) {
+    .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 1.25rem; }
+    .file-row { grid-template-columns: minmax(0, 1fr) auto; }
+    .file-row > :nth-child(2) { display: none; }
+}

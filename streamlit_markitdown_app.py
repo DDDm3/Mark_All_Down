@@ -25,7 +25,6 @@ class ConversionResult:
 
 def init_state() -> None:
     defaults = {
-        "theme": "light",
         "results": {},
         "errors": {},
         "selected_result": None,
@@ -35,42 +34,27 @@ def init_state() -> None:
             st.session_state[key] = value
 
 
-def theme_tokens(theme: str) -> dict[str, str]:
-    if theme == "dark":
-        return {
-            "bg": "#141217",
-            "surface": "#1c1920",
-            "surface_alt": "#242028",
-            "text": "#f2edf4",
-            "muted": "#aaa1ad",
-            "line": "#39323d",
-            "accent": "#b9a1f8",
-            "accent_hover": "#c9b6ff",
-            "accent_text": "#211a31",
-            "success": "#72cda2",
-            "danger": "#f0959f",
-            "chip": "#2c2632",
-            "code_bg": "#100e12",
-        }
+def theme_tokens() -> dict[str, str]:
     return {
-        "bg": "#f8f6f1",
-        "surface": "#fffdf9",
-        "surface_alt": "#f1eee7",
-        "text": "#252129",
-        "muted": "#716a74",
-        "line": "#ddd7df",
-        "accent": "#7358b8",
-        "accent_hover": "#60469f",
-        "accent_text": "#ffffff",
-        "success": "#267653",
-        "danger": "#a93d4b",
-        "chip": "#eee9f5",
-        "code_bg": "#f2efe9",
+        "bg": "#141217",
+        "surface": "#1c1920",
+        "surface_alt": "#242028",
+        "text": "#f2edf4",
+        "muted": "#aaa1ad",
+        "line": "#39323d",
+        "accent": "#b9a1f8",
+        "accent_hover": "#c9b6ff",
+        "accent_text": "#211a31",
+        "success": "#72cda2",
+        "danger": "#f0959f",
+        "chip": "#2c2632",
+        "code_bg": "#100e12",
     }
 
 
-def inject_styles(theme: str) -> None:
-    t = theme_tokens(theme)
+def inject_styles() -> None:
+    t = theme_tokens()
+    stylesheet = Path(__file__).with_name("styles.css").read_text(encoding="utf-8")
     st.markdown(
         f"""
         <style>
@@ -89,273 +73,7 @@ def inject_styles(theme: str) -> None:
             --chip: {t["chip"]};
             --code-bg: {t["code_bg"]};
         }}
-
-        html, body, [data-testid="stAppViewContainer"], .stApp {{
-            background: var(--app-bg);
-            color: var(--text);
-        }}
-
-        [data-testid="stHeader"] {{
-            background: transparent;
-        }}
-
-        [data-testid="stToolbar"] {{
-            right: 1.5rem;
-        }}
-
-        .block-container {{
-            max-width: 1320px;
-            padding-top: 2.1rem;
-            padding-bottom: 7rem;
-        }}
-
-        h1, h2, h3, p, label, [data-testid="stMarkdownContainer"] {{
-            color: var(--text);
-        }}
-
-        h1 {{
-            font-size: clamp(2.1rem, 4vw, 3.65rem) !important;
-            line-height: 1.04 !important;
-            letter-spacing: -0.045em !important;
-            font-weight: 650 !important;
-            margin: 0 0 0.7rem !important;
-        }}
-
-        h2 {{
-            letter-spacing: -0.025em !important;
-            font-size: 1.35rem !important;
-        }}
-
-        h3 {{
-            letter-spacing: -0.015em !important;
-        }}
-
-        .eyebrow {{
-            color: var(--accent);
-            font-size: 0.76rem;
-            font-weight: 750;
-            letter-spacing: 0.11em;
-            text-transform: uppercase;
-            margin-bottom: 0.8rem;
-        }}
-
-        .hero-copy {{
-            color: var(--muted);
-            font-size: 1.04rem;
-            line-height: 1.7;
-            max-width: 670px;
-            margin: 0;
-        }}
-
-        .privacy-note {{
-            color: var(--muted);
-            font-size: 0.84rem;
-            text-align: right;
-            padding-top: 0.35rem;
-        }}
-
-        .section-kicker {{
-            color: var(--muted);
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin: 2.2rem 0 0.65rem;
-        }}
-
-        .format-row {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }}
-
-        .format-chip {{
-            background: var(--chip);
-            color: var(--text);
-            border-radius: 999px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            padding: 0.34rem 0.68rem;
-        }}
-
-        .metric-line {{
-            display: flex;
-            gap: 1.6rem;
-            align-items: center;
-            color: var(--muted);
-            font-size: 0.88rem;
-            padding: 0.7rem 0 0.25rem;
-        }}
-
-        .metric-line strong {{
-            color: var(--text);
-            font-weight: 700;
-        }}
-
-        .file-row {{
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto auto;
-            align-items: center;
-            gap: 1rem;
-            border-bottom: 1px solid var(--line);
-            padding: 0.9rem 0.1rem;
-        }}
-
-        .file-row:last-child {{
-            border-bottom: 0;
-        }}
-
-        .file-name {{
-            color: var(--text);
-            font-weight: 650;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }}
-
-        .file-meta {{
-            color: var(--muted);
-            font-size: 0.8rem;
-            margin-top: 0.2rem;
-        }}
-
-        .status-ready, .status-done, .status-error {{
-            border-radius: 999px;
-            font-size: 0.72rem;
-            font-weight: 750;
-            padding: 0.3rem 0.62rem;
-            white-space: nowrap;
-        }}
-
-        .status-ready {{
-            background: var(--surface-alt);
-            color: var(--muted);
-        }}
-
-        .status-done {{
-            background: color-mix(in srgb, var(--success) 14%, transparent);
-            color: var(--success);
-        }}
-
-        .status-error {{
-            background: color-mix(in srgb, var(--danger) 14%, transparent);
-            color: var(--danger);
-        }}
-
-        [data-testid="stFileUploader"] {{
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 18px;
-            padding: 0.35rem;
-        }}
-
-        [data-testid="stFileUploaderDropzone"] {{
-            background: transparent;
-            border: 1px dashed var(--line);
-            border-radius: 14px;
-            min-height: 168px;
-        }}
-
-        [data-testid="stFileUploaderDropzone"]:hover {{
-            border-color: var(--accent);
-        }}
-
-        [data-testid="stFileUploader"] small,
-        [data-testid="stFileUploader"] span {{
-            color: var(--muted);
-        }}
-
-        .stButton > button,
-        .stDownloadButton > button {{
-            border-radius: 999px;
-            min-height: 2.75rem;
-            font-weight: 700;
-            transition: 150ms ease;
-        }}
-
-        .stButton > button[kind="primary"],
-        .stDownloadButton > button[kind="primary"] {{
-            background: var(--accent);
-            border-color: var(--accent);
-            color: var(--accent-text);
-        }}
-
-        .stButton > button[kind="primary"]:hover,
-        .stDownloadButton > button[kind="primary"]:hover {{
-            background: var(--accent-hover);
-            border-color: var(--accent-hover);
-        }}
-
-        .stButton > button[kind="secondary"],
-        .stDownloadButton > button[kind="secondary"] {{
-            background: transparent;
-            border-color: var(--line);
-            color: var(--text);
-        }}
-
-        [data-testid="stVerticalBlockBorderWrapper"] {{
-            background: var(--surface);
-            border-color: var(--line);
-            border-radius: 18px;
-        }}
-
-        [data-testid="stTabs"] [data-baseweb="tab-list"] {{
-            gap: 1.2rem;
-            border-bottom: 1px solid var(--line);
-        }}
-
-        [data-testid="stTabs"] button {{
-            color: var(--muted);
-        }}
-
-        [data-testid="stTabs"] button[aria-selected="true"] {{
-            color: var(--accent);
-        }}
-
-        [data-testid="stCodeBlock"] {{
-            background: var(--code-bg);
-            border: 1px solid var(--line);
-            border-radius: 14px;
-        }}
-
-        [data-testid="stAlert"] {{
-            background: var(--surface);
-            color: var(--text);
-            border-color: var(--line);
-        }}
-
-        [data-testid="stSelectbox"] > div > div,
-        [data-testid="stToggle"] {{
-            color: var(--text);
-        }}
-
-        .stSelectbox [data-baseweb="select"] > div {{
-            background: var(--surface);
-            border-color: var(--line);
-            color: var(--text);
-        }}
-
-        hr {{
-            border-color: var(--line) !important;
-        }}
-
-        @media (max-width: 760px) {{
-            .block-container {{
-                padding-left: 1rem;
-                padding-right: 1rem;
-                padding-top: 1.25rem;
-            }}
-            .privacy-note {{
-                text-align: left;
-            }}
-            .file-row {{
-                grid-template-columns: minmax(0, 1fr) auto;
-            }}
-            .file-row > :nth-child(2) {{
-                display: none;
-            }}
-        }}
+        {stylesheet}
         </style>
         """,
         unsafe_allow_html=True,
@@ -380,7 +98,7 @@ def file_key(name: str, data: bytes) -> str:
 def get_converter():
     from markitdown import MarkItDown
 
-    return MarkItDown(enable_plugins=False)
+    return MarkItDown()
 
 
 def convert_upload(name: str, data: bytes) -> str:
@@ -418,29 +136,13 @@ def make_zip(results: dict[str, ConversionResult]) -> bytes:
 
 
 def render_header() -> None:
-    title_col, theme_col = st.columns([5, 1.25], vertical_alignment="top")
-    with title_col:
-        st.markdown('<div class="eyebrow">Editorial workspace</div>', unsafe_allow_html=True)
-        st.markdown(f"# {APP_TITLE}")
-        st.markdown(
-            '<p class="hero-copy">Chuyển PDF, Excel và PowerPoint thành Markdown '
-            "sạch để đọc, tìm kiếm và làm việc cùng mô hình ngôn ngữ.</p>",
-            unsafe_allow_html=True,
-        )
-    with theme_col:
-        is_dark = st.toggle(
-            "Chế độ tối",
-            value=st.session_state.theme == "dark",
-            key="theme_toggle",
-        )
-        new_theme = "dark" if is_dark else "light"
-        if new_theme != st.session_state.theme:
-            st.session_state.theme = new_theme
-            st.rerun()
-        st.markdown(
-            '<div class="privacy-note">Tệp được xử lý cục bộ<br>trong phiên làm việc.</div>',
-            unsafe_allow_html=True,
-        )
+    st.markdown('<div class="eyebrow">Editorial workspace</div>', unsafe_allow_html=True)
+    st.markdown(f"# {APP_TITLE}")
+    st.markdown(
+        '<p class="hero-copy">Chuyển PDF, Excel và PowerPoint thành Markdown '
+        "sạch để đọc, tìm kiếm và làm việc cùng mô hình ngôn ngữ.</p>",
+        unsafe_allow_html=True,
+    )
 
 
 def render_file_queue(uploaded_files) -> list[tuple[str, str, bytes, int]]:
@@ -590,7 +292,7 @@ def render_results() -> None:
         truncated = len(selected.markdown) > MAX_PREVIEW_CHARS
         rendered_tab, source_tab = st.tabs(["Bản đọc", "Mã Markdown"])
         with rendered_tab:
-            with st.container(border=True):
+            with st.container(height=560, border=True):
                 st.markdown(preview)
                 if truncated:
                     st.info(
@@ -598,9 +300,10 @@ def render_results() -> None:
                         "Tệp tải xuống vẫn chứa đầy đủ nội dung."
                     )
         with source_tab:
-            st.code(preview, language="markdown", line_numbers=True)
-            if truncated:
-                st.caption("Đang hiển thị phần đầu của tài liệu.")
+            with st.container(height=560, border=True):
+                st.code(preview, language="markdown", line_numbers=True)
+                if truncated:
+                    st.caption("Đang hiển thị phần đầu của tài liệu.")
 
 
 def main() -> None:
@@ -611,7 +314,7 @@ def main() -> None:
         initial_sidebar_state="collapsed",
     )
     init_state()
-    inject_styles(st.session_state.theme)
+    inject_styles()
     render_header()
 
     st.markdown('<div class="section-kicker">Thêm tài liệu</div>', unsafe_allow_html=True)
@@ -619,6 +322,7 @@ def main() -> None:
         "Kéo thả tài liệu vào đây",
         type=SUPPORTED_TYPES,
         accept_multiple_files=True,
+        key="document_uploader",
         help="Hỗ trợ PDF, PPT/PPTX và XLS/XLSX. PDF scan có thể cần OCR.",
     )
     st.markdown(
@@ -634,6 +338,7 @@ def main() -> None:
     )
 
     queue = render_file_queue(uploaded_files or [])
+    st.markdown('<div style="height: 16px"></div>', unsafe_allow_html=True)
     action_left, action_right = st.columns([1, 3], vertical_alignment="center")
     with action_left:
         convert_clicked = st.button(

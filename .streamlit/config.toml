@@ -1,0 +1,3 @@
+[server]
+# Keep larger scanned PDFs from being rejected by Streamlit before the app sees them.
+maxUploadSize = 1024
