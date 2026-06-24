@@ -15,6 +15,8 @@ import sys
 from pathlib import Path
 from typing import Iterable
 
+from ocr_pdf import ocr_pdf_to_markdown
+
 SUPPORTED_EXTENSIONS = {
     ".pdf",
     ".ppt",
@@ -181,14 +183,18 @@ def convert_files(
 
             # convert_local chỉ cho phép đọc file cục bộ, an toàn và đúng mục đích hơn
             # convert() vốn còn có thể nhận URL hoặc các nguồn dữ liệu khác.
-            result = converter.convert_local(source)
-            markdown = result.text_content
+            try:
+                markdown = converter.convert_local(source).text_content
+            except Exception:
+                if source.suffix.lower() != ".pdf":
+                    raise
+                markdown = ""
 
             if not markdown or not markdown.strip():
-                raise ValueError(
-                    "Không trích xuất được nội dung. "
-                    "Nếu đây là PDF scan, tài liệu có thể cần OCR."
-                )
+                if source.suffix.lower() != ".pdf":
+                    raise ValueError("Không trích xuất được nội dung từ tệp này.")
+                print(f"[OCR] {source}")
+                markdown = ocr_pdf_to_markdown(source)
 
             destination.write_text(markdown, encoding="utf-8")
             print(f"[THÀNH CÔNG] {source} -> {destination}")

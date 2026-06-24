@@ -9,6 +9,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from ocr_pdf import ocr_pdf_to_markdown
+
 
 APP_TITLE = "Tài liệu → Markdown"
 SUPPORTED_TYPES = ["pdf", "ppt", "pptx", "xls", "xlsx"]
@@ -107,13 +109,17 @@ def convert_upload(name: str, data: bytes) -> str:
     with tempfile.TemporaryDirectory(prefix="markitdown_") as temp_dir:
         source = Path(temp_dir) / safe_name
         source.write_bytes(data)
-        result = get_converter().convert_local(source)
+        try:
+            markdown = get_converter().convert_local(source).text_content
+        except Exception:
+            if source.suffix.lower() != ".pdf":
+                raise
+            markdown = ""
+        if not markdown or not markdown.strip():
+            if source.suffix.lower() != ".pdf":
+                raise ValueError("Không trích xuất được nội dung từ tệp này.")
+            markdown = ocr_pdf_to_markdown(source)
 
-    markdown = result.text_content
-    if not markdown or not markdown.strip():
-        raise ValueError(
-            "Không trích xuất được nội dung. PDF dạng scan có thể cần OCR."
-        )
     return markdown
 
 
